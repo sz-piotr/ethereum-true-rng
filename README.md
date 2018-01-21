@@ -1,5 +1,9 @@
 # TrueRNG implemented in Solidity
 
+**IMPORTANT! This approach does not actually solve the problem of miners tampering with the numbers while introducing other attack vectors.**
+
+You can read more about the vulnerabilities in [this reddit thread](https://www.reddit.com/r/ethdev/comments/7ryg2o/i_am_working_on_a_random_number_generator_dao/).
+
 ## Motivation
 
 Generating random numbers is very useful. Because the Ethereum blockchain's smart contracts are deterministic, creating such numbers is very hard. The current solutions that I am aware of are as follows:
@@ -17,8 +21,6 @@ An oracle service connects the outside world to the blockchain. While they can p
 While absolutely secure, it is very expensive and takes a long time to generate numbers. The RanDAO implementation is available [here](https://github.com/randao/randao).
 
 ## My approach
-
-**IMPORTANT! The following approach has not been tested and is a work in progress. Use at your own risk.**
 
 The proposed system is as follows. There exist a public array of numbers that were generated. Everyone is allowed to add a new number by xoring the submitted value with the last number. Every participant also has a bitmask created by xoring all of their submitted values. When the participant wants to retrieve a random number generated for them they xor their mask with a number in the shared array.
 
